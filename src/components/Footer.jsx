@@ -11,10 +11,10 @@ export default function Footer() {
           <div className="footer-section">
             <h4>{t('footer.links')}</h4>
             <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">FAQs</a></li>
-              <li><a href="#">Feedback</a></li>
-              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">{t('footer.about')}</a></li>
+              <li><a href="#">{t('footer.faqs')}</a></li>
+              <li><a href="#">{t('footer.feedback')}</a></li>
+              <li><a href="#">{t('footer.privacy')}</a></li>
             </ul>
           </div>
           
@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
           
           <div className="footer-section">
-            <h4>Government Portals</h4>
+            <h4>{t('footer.portals')}</h4>
             <ul>
               <li><a href="#">Digital India</a></li>
               <li><a href="#">MyGov.in</a></li>

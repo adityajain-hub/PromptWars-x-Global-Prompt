@@ -17,17 +17,17 @@
   /* Shared Accent Colors */
   --accent-saffron: #FF9933;
   --accent-saffron-glow: rgba(255, 153, 51, 0.15);
-  --accent-green: #10B981;
-  --accent-green-glow: rgba(16, 185, 129, 0.15);
-  --accent-blue: #3B82F6;
-  --accent-blue-glow: rgba(59, 130, 246, 0.15);
+  --accent-green: #138808; /* Indian Flag Green */
+  --accent-green-glow: rgba(19, 136, 8, 0.15);
+  --accent-blue: #000080; /* Ashoka Chakra Navy Blue */
+  --accent-blue-glow: rgba(0, 0, 128, 0.15);
   --accent-purple: #8B5CF6;
   --accent-purple-glow: rgba(139, 92, 246, 0.15);
 
   /* Gradients */
-  --gradient-saffron: linear-gradient(135deg, #FF9933, #F97316);
-  --gradient-green: linear-gradient(135deg, #10B981, #059669);
-  --gradient-blue: linear-gradient(135deg, #3B82F6, #2563EB);
+  --gradient-saffron: linear-gradient(135deg, #FF9933, #E87A00);
+  --gradient-green: linear-gradient(135deg, #138808, #0C6104);
+  --gradient-blue: linear-gradient(135deg, #000080, #000050);
   --gradient-purple: linear-gradient(135deg, #8B5CF6, #7C3AED);
 
   /* Shadows */

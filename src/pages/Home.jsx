@@ -48,7 +48,7 @@ export default function Home() {
             letterSpacing: '-0.04em', 
             lineHeight: 1.15,
             marginBottom: '16px',
-            background: 'linear-gradient(135deg, #F1F5F9, #FF9933)',
+            background: 'linear-gradient(135deg, var(--text-primary), var(--accent-saffron))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -119,13 +119,13 @@ export default function Home() {
           </span>
           
           <h2 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '40px' }}>
-            Making a Real Difference
+            {t('home.impactTitle')}
           </h2>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', maxWidth: '800px', margin: '0 auto' }}>
             <div className="stat-card">
               <div className="stat-number" style={{ color: 'var(--accent-blue)' }}>156</div>
-              <div className="stat-label">Total Issues Reported</div>
+              <div className="stat-label">{t('home.impactTotal')}</div>
             </div>
             <div className="stat-card">
               <div className="stat-number" style={{ color: 'var(--accent-green)' }}>89%</div>
@@ -133,7 +133,7 @@ export default function Home() {
             </div>
             <div className="stat-card">
               <div className="stat-number" style={{ color: 'var(--accent-saffron)' }}>3.2</div>
-              <div className="stat-label">Avg Days to Resolve</div>
+              <div className="stat-label">{t('home.impactAvg')}</div>
             </div>
           </div>
         </div>

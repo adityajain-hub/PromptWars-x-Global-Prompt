@@ -20,14 +20,18 @@ export default function TextToSpeech({ text }) {
       if ('speechSynthesis' in window) {
         const utterance = new SpeechSynthesisUtterance(text);
         
-        // Try to find a matching voice
+        // Try to find a matching voice, preferring high quality/Google voices
         const voices = window.speechSynthesis.getVoices();
         let targetVoice = null;
         
         if (language === 'hi') {
-          targetVoice = voices.find(v => v.lang.includes('hi-IN') || v.lang.includes('hi'));
+          // Prefer Google Hindi or Premium Hindi voices
+          targetVoice = voices.find(v => (v.lang.includes('hi-IN') || v.lang.includes('hi')) && v.name.includes('Google')) ||
+                        voices.find(v => v.lang.includes('hi-IN') || v.lang.includes('hi'));
         } else {
-          targetVoice = voices.find(v => v.lang.includes('en-IN') || v.lang.includes('en-US'));
+          // Prefer Google UK/US English or Premium English voices
+          targetVoice = voices.find(v => (v.lang.includes('en-IN') || v.lang.includes('en-GB') || v.lang.includes('en-US')) && v.name.includes('Google')) ||
+                        voices.find(v => v.lang.includes('en-IN') || v.lang.includes('en-GB') || v.lang.includes('en-US'));
         }
         
         if (targetVoice) {
@@ -36,6 +40,10 @@ export default function TextToSpeech({ text }) {
         
         // Use language code
         utterance.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
+        
+        // Adjust for clarity
+        utterance.rate = 0.9; // Slightly slower for better clarity
+        utterance.pitch = 1.0;
         
         utterance.onend = () => {
           setIsPlaying(false);

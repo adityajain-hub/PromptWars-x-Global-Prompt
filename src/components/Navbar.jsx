@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import Logo from './Logo';
 
 export default function Navbar() {
   const { language, setLanguage, t, fontSize, setFontSize, theme, setTheme } = useLanguage();
@@ -22,8 +23,8 @@ export default function Navbar() {
       <nav className="navbar">
         <div className="container">
           <Link to="/" className="logo">
-            <span role="img" aria-label="India">🏛️</span> 
-            {language === 'en' ? 'SB Smart Bharat' : 'स्मार्ट भारत'}
+            <Logo />
+            <span>SB {t('app.title')}</span>
           </Link>
           
           <div className="nav-links">
