@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
 import Logo from './Logo';
 
 export default function Navbar() {
   const { language, setLanguage, t, fontSize, setFontSize, theme, setTheme } = useLanguage();
+  const { isLoggedIn, userProfile, logout } = useAuth();
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path ? 'active' : '';
@@ -51,10 +53,23 @@ export default function Navbar() {
               <option value="hi">हिंदी</option>
             </select>
             
-            <div className="profile-btn">
-              <div className="avatar">A</div>
-              <span>Aditya Jain</span>
-            </div>
+            {isLoggedIn ? (
+              <div className="tooltip-container" data-tooltip="Logout">
+                <button 
+                  onClick={logout}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid var(--border-color)', padding: '4px 12px', borderRadius: '20px', cursor: 'pointer', color: 'var(--text-primary)' }}
+                >
+                  <div style={{ width: '24px', height: '24px', background: 'var(--accent-saffron)', borderRadius: '50%', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold' }}>
+                    {userProfile?.name?.charAt(0) || 'U'}
+                  </div>
+                  <span style={{ fontSize: '0.85rem' }}>{userProfile?.name.split(' ')[0]}</span>
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className="btn btn-primary" style={{ padding: '6px 16px', fontSize: '0.85rem', borderRadius: '20px' }}>
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       </nav>

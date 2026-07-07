@@ -1,4 +1,25 @@
 export default async function handler(req, res) {
+  // CORS Headers
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Or restrict to your vercel domain
+  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  // Handle preflight request
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  // Very basic origin check (optional for extra security if domain is known)
+  // const origin = req.headers.origin;
+  // const allowedOrigins = ['http://localhost:5173', 'https://prompt-wars-x-global-prompt.vercel.app'];
+  // if (origin && !allowedOrigins.includes(origin)) {
+  //   return res.status(403).json({ error: 'Forbidden' });
+  // }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
