@@ -19,17 +19,19 @@ Always maintain a respectful, government-official yet friendly tone.`;
   // Here we just let ChatInterface handle its own state, but we can pass initialQuery if we wanted to build that feature.
   
   return (
-    <div className="container animate-fade-in" style={{ height: 'calc(100vh - 250px)' }}>
-      <div className="page-header" style={{ marginBottom: '20px' }}>
+    <div className="container animate-fade-in" style={{ display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 200px)', paddingBottom: '40px' }}>
+      <div className="page-header" style={{ marginBottom: '20px', flexShrink: 0 }}>
         <h1 style={{ color: 'var(--primary-color)' }}>{t('hero.askAI')}</h1>
         <p>Your intelligent civic companion.</p>
       </div>
       
-      <ChatInterface 
-        systemInstruction={systemInstruction}
-        pageId="main_chat"
-        initialQuery={initialQuery}
-      />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '500px' }}>
+        <ChatInterface 
+          systemInstruction={systemInstruction}
+          pageId="main_chat"
+          initialQuery={initialQuery}
+        />
+      </div>
     </div>
   );
 }
