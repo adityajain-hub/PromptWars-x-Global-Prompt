@@ -6,56 +6,50 @@
   [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://prompt-wars-x-global-prompt.vercel.app/)
   [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
   [![Gemini AI](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
-  [![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/)
 </div>
 
 <br/>
 
-## 🌟 Overview
+## 🎯 Chosen Vertical
+**GovTech & Public Services (Smart Civic Assistant)**
+This project aims to revolutionize how citizens interact with government services by removing bureaucratic complexity, language barriers, and accessibility issues. Smart Bharat serves as a centralized, AI-driven portal for resolving civic issues, exploring welfare schemes, and seeking guidance.
 
-**Smart Bharat** is an innovative, AI-first platform designed to bridge the gap between the Indian government and its citizens. By leveraging the advanced reasoning and multimodal capabilities of **Google Gemini 2.5 Flash Lite**, this platform acts as an intelligent civic companion.
+---
 
-Whether you need to figure out the documents required for an Aadhar card update, automatically categorize a civic complaint (like a pothole or broken streetlight), or find out which government schemes you are eligible for — **Bharat AI** is here to guide you in multiple languages.
+## 🧠 Approach and Logic
+The core logic revolves around a dynamic **Contextual AI architecture**:
+1. **Understanding the User Context:** We leverage **Gemini 2.5 Flash** to power a conversational agent ("Bharat AI") that adapts its tone, language (English/Hindi), and suggestions based on user input. 
+2. **Action-Oriented Prompts:** Instead of being a generic chatbot, the AI is prompted with specific system instructions to act as a *government-official yet empathetic civic companion*. It processes natural language to categorize civic complaints (e.g., routing a pothole complaint to the PWD).
+3. **Accessibility First:** The design logic prioritizes inclusivity. We built custom bilingual state management, integrated web SpeechSynthesis API for Text-to-Speech (using high-quality voices), and implemented visual accessibility toggles (Light/Dark mode, A/A+/A++ font scaling).
+4. **Security Logic:** To prevent API key leaks and CORS issues, the frontend never communicates with Gemini directly. It routes requests through a secure **Serverless Backend (Vercel Edge Functions)**.
+
+---
+
+## ⚙️ How the Solution Works
+- **Interactive AI Chat:** Users describe their problems in natural language. The React frontend sends the request securely via our `/api/chat` serverless function. Gemini evaluates the query against civic policies and returns actionable, step-by-step guidance.
+- **Multimodal Issue Reporting:** Users can type out complaints (e.g., "There is a broken streetlight near MG Road"). In future expansions, image attachments can be analyzed by Gemini Vision to instantly categorize the infrastructure damage.
+- **Language & Accessibility Toggles:** A React Context (`LanguageContext`) globally manages the application state. Changing the language instantly translates the UI using a local dictionary and signals the AI to respond in the selected language.
+- **Welfare Scheme Matching:** By capturing basic demographic data, the platform uses AI to filter and present government schemes (like PM-KISAN, Ayushman Bharat) the user is eligible for.
+
+---
+
+## 🤔 Assumptions Made
+1. **API Availability:** Assumed the Google Gemini 2.5 Flash API is available and responsive for production workloads.
+2. **User Demographics:** Assumed the primary user base consists of Indian citizens looking for local, state, or central government assistance, hence the focus on English and Hindi.
+3. **Deployment Environment:** Assumed the solution is hosted on a modern cloud platform (Vercel) capable of running Node.js serverless functions.
+4. **Browser Support:** Assumed users are on modern browsers that support HTML5 SpeechSynthesis API for the Read Aloud feature.
 
 ---
 
 ## ✨ Key Features
-
-- 🤖 **Bharat AI Chat Assistant:** Ask any civic question using Text, Voice, or by attaching Images. The AI automatically understands your request and guides you step-by-step.
-- 🗣️ **Voice & Text-to-Speech:** Full accessibility with high-quality Voice Input and AI Voice Output (Read Aloud) features.
-- 🌍 **Bilingual Support (English & Hindi):** Instantly toggle the entire UI and AI interactions between English and Hindi, breaking down language barriers for citizens.
-- 🌓 **Light / Dark Mode:** A stunning, premium UI with glassmorphism, dynamic gradients, and an accessible high-contrast Dark Mode.
-- 📝 **Smart Issue Reporting:** Users can report civic issues (with location details). The AI analyzes the description to understand the severity and automatically tags the relevant department.
-- 🎓 **Personalized Scheme Discovery:** An AI-powered engine that analyzes user profiles to recommend the best state and central government welfare schemes.
-
----
-
-## 🛠️ Technology Stack
-
-| Category | Technologies Used |
-|---|---|
-| **Frontend Framework** | React.js (v18), Vite |
-| **Routing** | React Router DOM (v6) |
-| **Styling** | Vanilla CSS3 (Custom Variables, Glassmorphism, CSS Modules) |
-| **Artificial Intelligence** | Google Gemini API (`gemini-2.5-flash-lite`) |
-| **Backend / API Proxy** | Vercel Serverless Functions (`api/chat.js`) |
-| **Hosting & Deployment**| Vercel (CI/CD connected to GitHub) |
-
----
-
-## 🚀 How It Works
-
-### The Architecture
-To protect the sensitive Gemini API Key and prevent CORS issues, the frontend does not call the Gemini API directly. 
-1. The React frontend sends the user's prompt, image (base64), and conversation history to a **Vercel Serverless Function** (`/api/chat`).
-2. The Serverless function securely injects the `GEMINI_API_KEY` from environment variables and constructs the payload.
-3. The function calls the official Google Gemini REST API and returns the AI's response back to the client.
+- 🗣️ **Text-to-Speech:** High-quality AI Voice Output (Read Aloud) features.
+- 🌍 **Bilingual Support (English & Hindi):** Instantly toggle the entire UI and AI interactions between English and Hindi.
+- 🌓 **Premium UX & Accessibility:** Glassmorphism UI, Light / Dark Mode, and A/A+/A++ text scaling.
+- 🔒 **Secure Architecture:** Vercel Serverless Functions protect API keys.
 
 ---
 
 ## 💻 Local Setup Instructions
-
-If you want to run this project locally on your machine, follow these steps:
 
 ### 1. Clone the repository
 ```bash
@@ -69,29 +63,17 @@ npm install
 ```
 
 ### 3. Setup Environment Variables
-Create a `.env.local` file in the root directory and add your Google Gemini API Key:
+Create a `.env` file in the root directory and add your Google Gemini API Key:
 ```env
-GEMINI_API_KEY=your_actual_api_key_here
+GEMINI_API_KEY=your_api_key_here
 ```
 
 ### 4. Start the Development Server
 ```bash
 npm run dev
 ```
-The app will be running at `http://localhost:5173`. 
-*(Note: To test the Serverless API locally, you may need to use Vercel CLI: `vercel dev`)*
 
 ---
-
-## 🎨 Design Philosophy
-
-Smart Bharat was designed with a focus on **Digital India** aesthetics and **Premium UX**:
-- **Color Palette:** Accents precisely matched to the Indian Flag (Saffron, White, Ashoka Navy Blue, and Green).
-- **Accessibility First:** High contrast support, scalable typography, voice input, and screen-reader friendly overlays.
-- **Micro-interactions:** Glowing hover states, smooth transitions, and tooltip overlays ensure the user feels engaged.
-
----
-
 <div align="center">
   <p>Built with ❤️ for a Smarter, Digital India.</p>
 </div>
