@@ -10,6 +10,7 @@ import GovtServices from './pages/GovtServices';
 import ReportIssue from './pages/ReportIssue';
 import Schemes from './pages/Schemes';
 import ChatPage from './pages/ChatPage';
+import { About, FAQ, Feedback, Privacy } from './pages/StaticPages';
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
               <Route path="/report" element={<ReportIssue />} />
               <Route path="/schemes" element={<Schemes />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/feedback" element={<Feedback />} />
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </main>
           <Footer />
