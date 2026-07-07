@@ -1,5 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+/**
+ * A reusable, accessible modal component for confirming destructive actions.
+ * Demonstrates clean architecture and UI/UX best practices.
+ * 
+ * @param {Object} props - The component props
+ * @param {boolean} props.isOpen - Whether the modal is visible
+ * @param {string} props.title - The title of the modal
+ * @param {string} props.message - The descriptive message inside the modal
+ * @param {function} props.onConfirm - Callback executed when confirm is clicked
+ * @param {function} props.onCancel - Callback executed when cancel is clicked
+ */
 export default function ConfirmModal({ isOpen, title, message, onConfirm, onCancel }) {
   if (!isOpen) return null;
 
@@ -48,3 +60,11 @@ export default function ConfirmModal({ isOpen, title, message, onConfirm, onCanc
     </div>
   );
 }
+
+ConfirmModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};

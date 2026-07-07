@@ -1,6 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextToSpeech from './TextToSpeech';
 
+/**
+ * Renders an individual chat message bubble in the AI Chat interface.
+ * Handles multimodal content including text, images, and embedded Text-to-Speech functionality.
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.msg - The message object
+ * @param {string} props.msg.role - The sender of the message ('user' or 'model')
+ * @param {string} [props.msg.text] - The text content of the message
+ * @param {string} [props.msg.image] - Base64 encoded image attachment
+ */
 export default function ChatMessage({ msg }) {
   const isUser = msg.role === 'user';
   
@@ -37,3 +48,11 @@ export default function ChatMessage({ msg }) {
     </div>
   );
 }
+
+ChatMessage.propTypes = {
+  msg: PropTypes.shape({
+    role: PropTypes.oneOf(['user', 'model']).isRequired,
+    text: PropTypes.string,
+    image: PropTypes.string,
+  }).isRequired,
+};

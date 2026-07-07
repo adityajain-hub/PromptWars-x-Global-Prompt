@@ -1,6 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { sendChatMessage } from '../utils/api';
 
+/**
+ * Custom React Hook that manages the state and logic for the AI Civic Companion chat.
+ * Handles persistence to localStorage, API fetching, and loading states.
+ * 
+ * @param {string} pageId - Unique identifier for the chat session (used for localStorage)
+ * @param {string} language - Current language code ('en' or 'hi')
+ * @param {string} systemInstruction - The base system prompt for Gemini
+ * @param {string} [initialQuery] - Optional initial query to automatically send on load
+ * @returns {Object} { messages, isLoading, sendMessage, clearHistory }
+ */
 export function useChat(pageId, language, systemInstruction, initialQuery) {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

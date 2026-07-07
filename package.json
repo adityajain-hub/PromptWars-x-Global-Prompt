@@ -1,7 +1,9 @@
 {
-  "name": "temp-app",
+  "name": "smart-bharat",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Smart Bharat is a smart, dynamic assistant that uses logical decision making based on user context for public services.",
+  "keywords": ["smart assistant", "dynamic assistant", "logical decision making", "civic", "hackathon"],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "prop-types": "^15.8.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1"

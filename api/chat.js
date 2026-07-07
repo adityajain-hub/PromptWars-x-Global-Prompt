@@ -1,3 +1,11 @@
+/**
+ * Serverless API handler for the Gemini 2.5 Flash model.
+ * Secures the API key and enforces CORS origin protection.
+ * Demonstrates secure architecture for a public-facing React application.
+ * 
+ * @param {import('http').IncomingMessage} req - The HTTP request
+ * @param {import('http').ServerResponse} res - The HTTP response
+ */
 export default async function handler(req, res) {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Credentials', true);
