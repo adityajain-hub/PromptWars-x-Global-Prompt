@@ -28,6 +28,7 @@ Always maintain a respectful, government-official yet friendly tone.`;
       <ChatInterface 
         systemInstruction={systemInstruction}
         pageId="main_chat"
+        initialQuery={initialQuery}
       />
     </div>
   );

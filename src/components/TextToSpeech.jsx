@@ -54,8 +54,10 @@ export default function TextToSpeech({ text }) {
   };
 
   return (
-    <button onClick={toggleSpeech} className="btn btn-outline" style={{ padding: '4px 10px', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-      {isPlaying ? '⏹️ ' + t('chat.stop') : '🔊 ' + t('chat.readAloud')}
-    </button>
+    <div className="tooltip-container" data-tooltip={isPlaying ? t('chat.stop') : t('chat.readAloud')}>
+      <button onClick={toggleSpeech} className="btn btn-outline" style={{ padding: '4px 10px', fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+        {isPlaying ? '⏹️' : '🔊'}
+      </button>
+    </div>
   );
 }

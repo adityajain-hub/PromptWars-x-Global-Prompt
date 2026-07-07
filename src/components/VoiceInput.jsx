@@ -60,14 +60,15 @@ export default function VoiceInput({ onTranscript }) {
   };
 
   return (
-    <button 
-      type="button" 
-      onClick={toggleRecording} 
-      className={`btn-voice ${isRecording ? 'mic-recording' : ''}`}
-      style={{ fontSize: '1.2rem', padding: '5px', color: isRecording ? 'red' : 'inherit', border: 'none', background: 'transparent', cursor: 'pointer' }}
-      title="Speak"
-    >
-      🎤
-    </button>
+    <div className="tooltip-container" data-tooltip="Use microphone">
+      <button 
+        type="button" 
+        onClick={toggleRecording} 
+        className={`btn-voice ${isRecording ? 'mic-recording' : ''}`}
+        style={{ fontSize: '1.2rem', padding: '5px', color: isRecording ? '#EF4444' : 'inherit', border: 'none', background: 'transparent', cursor: 'pointer' }}
+      >
+        🎤
+      </button>
+    </div>
   );
 }

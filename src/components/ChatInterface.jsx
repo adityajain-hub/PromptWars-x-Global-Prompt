@@ -4,12 +4,13 @@ import { sendChatMessage } from '../utils/api';
 import VoiceInput from './VoiceInput';
 import TextToSpeech from './TextToSpeech';
 
-export default function ChatInterface({ systemInstruction, pageId }) {
+export default function ChatInterface({ systemInstruction, pageId, initialQuery }) {
   const { language, t } = useLanguage();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const hasInitialized = useRef(false);
   
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -35,6 +36,40 @@ export default function ChatInterface({ systemInstruction, pageId }) {
     }
   }, [messages, pageId]);
 
+  // Handle initialQuery auto-submit
+  useEffect(() => {
+    if (initialQuery && !hasInitialized.current && messages.length > 0) {
+      hasInitialized.current = true;
+      setInputText(initialQuery);
+      // Wait for state to update before submitting
+      setTimeout(() => {
+        const fakeEvent = { preventDefault: () => {} };
+        // We need to bypass the form event temporarily and call the logic directly
+        handleInitialSubmit(initialQuery);
+      }, 100);
+    }
+  }, [initialQuery, messages]);
+
+  const handleInitialSubmit = async (queryText) => {
+    if (!queryText.trim()) return;
+
+    const newUserMsg = { role: 'user', text: queryText, image: null };
+    const updatedMessages = [...messages, newUserMsg];
+    
+    setMessages(updatedMessages);
+    setInputText('');
+    setIsLoading(true);
+
+    try {
+      const responseText = await sendChatMessage(updatedMessages, systemInstruction, language);
+      setMessages([...updatedMessages, { role: 'model', text: responseText }]);
+    } catch (error) {
+      setMessages([...updatedMessages, { role: 'model', text: `Error: ${error.message}` }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -42,6 +77,17 @@ export default function ChatInterface({ systemInstruction, pageId }) {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading]);
+
+  const handleClearHistory = () => {
+    if (window.confirm("Are you sure you want to clear the chat history?")) {
+      localStorage.removeItem(`chat_${pageId}`);
+      const greeting = language === 'en' 
+        ? "Hello! I am Bharat AI, your civic companion. How can I assist you today?"
+        : "नमस्ते! मैं भारत AI हूँ, आपका नागरिक साथी। आज मैं आपकी कैसे सहायता कर सकता हूँ?";
+      setMessages([{ role: 'model', text: greeting }]);
+      hasInitialized.current = false;
+    }
+  };
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
@@ -86,8 +132,15 @@ export default function ChatInterface({ systemInstruction, pageId }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: '400px', border: '1px solid var(--border-color)', borderRadius: '12px', background: 'var(--white)', overflow: 'hidden' }}>
       
+      {/* Chat Header Controls */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px 15px', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-color)' }}>
+        <button onClick={handleClearHistory} style={{ fontSize: '0.85rem', color: '#EF4444', background: 'rgba(239, 68, 68, 0.1)', padding: '5px 12px', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(239,68,68,0.2)' }}>
+          🗑️ Clear History
+        </button>
+      </div>
+
       {/* Chat Messages Area */}
-      <div style={{ flex: 1, padding: '20px', overflowY: 'auto', background: '#F8F9FA' }}>
+      <div className="chat-messages">
         {messages.map((msg, index) => (
           <div key={index} style={{ 
             display: 'flex', 
@@ -150,14 +203,15 @@ export default function ChatInterface({ systemInstruction, pageId }) {
           />
           
           {/* Image Attach Button */}
-          <button 
-            type="button" 
-            onClick={() => fileInputRef.current.click()} 
-            style={{ fontSize: '1.2rem', padding: '5px', background: 'transparent', cursor: 'pointer', border: 'none' }}
-            title="Attach Image"
-          >
-            📎
-          </button>
+          <div className="tooltip-container" data-tooltip="Upload Image">
+            <button 
+              type="button" 
+              onClick={() => fileInputRef.current.click()} 
+              style={{ fontSize: '1.2rem', padding: '5px', background: 'transparent', cursor: 'pointer', border: 'none' }}
+            >
+              📎
+            </button>
+          </div>
           
           <input 
             type="text" 
